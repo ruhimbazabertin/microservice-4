@@ -1,0 +1,46 @@
+server:
+  port: 9191
+
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+        - id: DEPARTMENT-SERVICE
+          uri: lb://DEPARTMENT-SERVICE
+          predicates:
+            - Path=/api/v1/departments/**
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  retry:
+    instances:
+      USER-SERVICE:
+        maxRetryAttempts: 3
+        waitDuration: 2s
+
+  eureka:
+    instance:
+      hostname: localhost
+    client:
+      registerWithEureka: true
+      fetchRegistry: true
+      serviceUrl:
+        defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

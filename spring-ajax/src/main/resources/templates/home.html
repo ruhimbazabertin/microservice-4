@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Importing js file-->
+    <script src="/postrequest.js"> </script>
+    <script src="/getrequest.js"> </script>
+    <script src="/getTimeRequest.js"></script>
+</head>
+<body>
+<div id="postResultDiv" align="center"></div>
+<div class="container">
+    <form id="bookForm">
+        <div class="form-group">
+            <label for="bookId">BookId:</label>
+            <input type="number" class="form-control" placeholder="Enter bookId" id="bookId">
+        </div>
+        <div class="form-group">
+            <label for="book_name">BookName:</label>
+            <input type="text" class="form-control" placeholder="Enter bookName" id="book_name">
+        </div>
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" class="form-control" placeholder="Enter author" id="author">
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"> Remember me
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div>
+        <button id="getAllBook" type="button" class="btn btn-primary btn btn-block">Get All Book</button>
+        <div id="getResultDiv" style="padding: 20px 10px 20px 50px">
+            <ul class="list-group">
+
+            </ul>
+        </div>
+    </div>
+    <br/>
+        <button id="time">Get Time</button>
+        <h2 id="printTime"></h2>
+</div>
+</body>
+</html>

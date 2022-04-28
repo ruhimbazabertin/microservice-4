@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Microservice</title>
+    <!--Integrating cdn for datatable-->
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />-->
+    <link rel="stylesheet" type="text/css" href="userPage.css"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<br/><br/><br/>
+<div class="container">
+    <div class="row">
+    <div class="col-md-6">
+    <div class="alert alert-dark" role="alert">
+        <center>Microservices Implementation</center>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">User</a></li>
+        <li><a data-toggle="tab" href="#depart">Department</a></li>
+        <li><a data-toggle="tab" href="#country">country</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3>User</h3>
+            <!--USER FORM-->
+            <form id="userForm" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="firstName">FirstName:</label>
+                    <input type="text" name="firstname" class="form-control" placeholder="Enter firstName" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">LastName:</label>
+                    <input type="text" name="lastname" class="form-control" placeholder="Enter lastName" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter Email" id="email" required>
+                    <div class="invalid-feedback">
+                        Please fill out this Email field.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>DepartName:</label>
+                    <select  name="department" class="form-control"  id="userDepartDropDown">
+                        <option value="">Nothing selected</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" id="saveUser">Submit</button>
+            </form>
+            <!--End Of Form-->
+        </div>
+        <div id="depart" class="tab-pane fade">
+            <h3>Department</h3>
+            <!--DEPART FORM-->
+            <form id="departForm" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="departName">DepartName:</label>
+                    <input type="text" name="departname" class="form-control" placeholder="Enter DepartName" id="departName">
+                </div>
+                <div class="form-group">
+                    <label for="departAddress">DepartAddress:</label>
+                    <input type="text" name="departaddress" class="form-control" placeholder="Enter DepartAddress" id="departAddress">
+                </div>
+                <div class="form-group">
+                    <label for="departCode">DepartCode:</label>
+                    <input type="text" name="departcode" class="form-control" placeholder="Enter DepartCode" id="departCode">
+                </div>
+                <button type="submit" class="btn btn-primary" id="save_depart">Submit</button>
+            </form>
+        </div>
+            <!--End Of Form-->
+        <div id="country" class="tab-pane fade">
+            <h3>Country</h3>
+            <!--COUNTRY FORM-->
+            <form id="countryForm" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="countryName">CountryName:</label>
+                    <input type="text" class="form-control" placeholder="Enter CountryName" id="countryName">
+                    <div class="invalid-feedback">
+                        Please fill out this CountryName field.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="countryCapital">CountryCapital:</label>
+                    <input type="text" class="form-control" placeholder="Enter CountryCapital" id="countryCapital">
+                    <div class="invalid-feedback">
+                        Please fill out this CountryCapital field.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="save_country">Submit</button>
+            </form>
+            <!--End Of Form-->
+        </div>
+    </div>
+</div>
+    </div>
+        <!--DATA TABLE-->
+    <div class="row">
+        <div class="col-md-6" style="padding-top: 50px;">
+            <div>
+                <table class="table table-bordered table-striped" id="userTable">
+
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>Email</th>
+                        <th>DepartName</th>
+                        <th>DepartCode</th>
+                        <th>DepartAddress</th>
+                        <th colspan="2">Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="usersTable">
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <!--End Data Table-->
+</div>
+    </div>
+<!-- MODEL FOR EDITING USER-->
+<div class="modal fade" id="userEditModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <form action="" method="put" class="needs-validation" novalidate>
+                            <input type="hidden" class="form-control"  id="user_id">
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label for="first_name">FirstName</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control"  id="first_name" name="firstname" required>
+                                    <div class="invalid-feedback">
+                                        Please fill out this field.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label for="last_name">LastName</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="last_name" name="lastName" required>
+                                    <div class="invalid-feedback">
+                                        Please fill out this field.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label for="userEmail">Email</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="userEmail" name="email" required>
+                                    <div class="invalid-feedback">
+                                        Please fill out field.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="depart"> Department</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="EditUserDepartDropDown" name="department" required>
+                                        <option value="">Nothing selected</option>
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select Department.
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="editUserButton" class="btn btn-primary">Save changes</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!--ENDING OF USE EDITING MODEL-->
+<!-- DELETE USER MODEL -->
+<div id="deleteUserModel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-body p-0">
+                <div class="card border-0 p-sm-3 p-2 justify-content-center">
+                    <div class="card-header pb-0 bg-white border-0 ">
+                        <div class="row">
+                            <div class="col ml-auto"><button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>
+                        </div>
+                        <p class="font-weight-bold mb-2"> Are you sure you wanna delete this record ?</p>
+                    </div>
+                    <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
+                        <div class="row justify-content-end no-gutters">
+                            <div class="col-auto"><button type="button" class="btn btn-light text-muted" data-dismiss="modal">Cancel</button></div>
+                            <div class="col-auto"><a href="" class="btn btn-danger px-4" id="deleteUserButton">Confirm Delete</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- END OF DELETE MODEL -->
+<script src="saveUser.js"></script>
+<script src="saveDepart.js"></script>
+<!--Data table script-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#userTable").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': false,
+                'aTargets': [-1]
+            }]
+
+        });
+    })
+</script>
+<!--END-->
+</body>
+</html>
